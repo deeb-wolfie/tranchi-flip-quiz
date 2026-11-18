@@ -172,12 +172,12 @@ var screens = [
   },
   // 3 goal
   function(){
-    head('Step 3 of 6 · Your goal','How much do you want to make on your first flip?');
-    $('body').innerHTML='<p class="sub">Your flip fee is the gap between what the seller takes and what the cash buyer pays. You keep it.</p>'+
+    head('Step 3 of 6 · Your goal','How much do you want to make in your first 30 days?');
+    $('body').innerHTML='<p class="sub">Using Tranchi Pro to flip your first contract. Pick your goal.</p>'+
       opts([
-        {v:'5k',b:'💵 $5K',s:'A first win. Prove to myself this works.'},
-        {v:'10k',b:'💰 $10K',s:'Real breathing room. Pay off debt and get ahead.'},
-        {v:'15k',b:'🚀 $15K+',s:'Do what Caleb did on his first flip.'}
+        {v:'5k',b:'💵 $5,000',s:'A first win. Prove to myself this works.'},
+        {v:'10k',b:'💰 $10,000',s:'Real breathing room. Pay off debt and get ahead.'},
+        {v:'20k',b:'🚀 $20,000+',s:'I want to flip a commercial or luxury deal.'}
       ],'goal');
     bindOpts('goal',10,'+10 · Goal set');
     foot('Continue',!!S.goal);
