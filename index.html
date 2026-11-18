@@ -117,7 +117,7 @@ select{width:100%;padding:14px;border-radius:12px;border:2px solid var(--line);f
 <div class="foot" id="foot"><div class="in"><button class="back" id="back" aria-label="Back">←</button><button class="go" id="go">Continue</button></div><div class="fine" id="fine"></div></div>
 
 <script>
-var CHECKOUT_URL = '#checkout'; // ← $1 Pro checkout
+var CHECKOUT_URL = 'https://tranchi.ai/checkout?direct=1&ab=checkout_split:current,funnel_price:trial'; // $1 Pro checkout (top performer, Nov 18)
 var q = new URLSearchParams(location.search);
 var NAME = (q.get('name')||'').replace(/[^a-zA-Z' -]/g,'').trim().slice(0,20);
 var VARIANT = q.get('v')||'quiz';
@@ -254,7 +254,7 @@ function game(n,d){
 
 function render(){ bar(); screens[S.step](); track('quiz_step'); window.scrollTo(0,0); }
 $('go').onclick=function(){
-  if(S.step===7){ track('checkout_click',{score:S.pts}); var u=CHECKOUT_URL+(CHECKOUT_URL.indexOf('?')>-1?'&':'?')+'state='+encodeURIComponent(S.state)+'&deal_type='+S.type+(q.get('email')?'&email='+encodeURIComponent(q.get('email')):''); location.href=u; return; }
+  if(S.step===7){ track('checkout_click',{score:S.pts}); var u=CHECKOUT_URL+(CHECKOUT_URL.indexOf('?')>-1?'&':'?')+'state='+encodeURIComponent(S.state)+'&deal_type='+S.type+'&goal='+S.goal+'&src=flip_quiz'; ['name','first_name','email','phone','utm_source','utm_medium','utm_campaign'].forEach(function(k){var v=q.get(k);if(v)u+='&'+k+'='+encodeURIComponent(v);}); location.href=u; return; }
   S.step++; render();
 };
 $('back').onclick=function(){ if(S.step>0 && S.step<6){ S.step--; render(); } };
