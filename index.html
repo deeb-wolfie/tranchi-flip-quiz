@@ -100,6 +100,7 @@ select{width:100%;padding:14px;border-radius:12px;border:2px solid var(--line);f
 .lki{aspect-ratio:4/3;background-size:cover;background-position:center;filter:saturate(.8)}
 .lkc b{display:block;font-size:14px;padding:6px 8px 0}
 .lkc small{display:block;font-size:10px;color:var(--muted);padding:0 8px 8px;line-height:1.3}
+.row2{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line,#e8e3d7);border-radius:12px;padding:14px 16px;margin-top:10px;font-size:15px}.row2 b{font-size:20px;font-weight:800}.row2.fee{border:2px dashed var(--gold,#c4a24c);background:transparent}
 </style>
 </head>
 <body>
@@ -220,12 +221,13 @@ function sample(t,p,bd,blur){ return '<div class="sample"><div><b class="'+(blur
 
 function game(n,d){
   var buyerMax=Math.round(d.arv*0.7-d.rep), spread=buyerMax-d.ask, isFlip=spread>=5000;
-  head('Step '+(3+n)+' of 6 · Flip or flop? (round '+n+'/2)','Would you flip this deal?');
+  head('Step '+(3+n)+' of 6 · Flip or flop? (round '+n+'/2)', n===1?'Is there money in this deal?':'What about this one?');
   $('body').innerHTML=
-    (n===1?'<p class="sub"><b>The rule pros use:</b> cash buyers pay about <b>70% of the after-repair value, minus repairs</b>. If the seller will take less than that, there\'s a flip.</p>':'<p class="sub">Same rule. Trust the math, not the price tag.</p>')+
-    '<div class="deal"><div class="t">'+d.type+'</div><div class="c">'+d.city+' · '+d.dom+'</div><div class="grid">'+
-    '<div><small>Seller will take</small><b>'+money(d.ask)+'</b></div><div><small>After-repair value</small><b>'+money(d.arv)+'</b></div>'+
-    '<div><small>Repairs</small><b>'+money(d.rep)+'</b></div><div><small>Your fee?</small><b>?</b></div></div></div>'+
+    (n===1?'<p class="sub">You lock the house at the <b>seller\'s price</b>, then sell the contract to a <b>cash buyer</b>. If the buyer pays more, <b>you keep the difference</b>.</p>':'<p class="sub">Same game. Does the buyer pay <b>more</b> than the seller wants?</p>')+
+    '<div class="deal"><div class="t">'+d.type+'</div><div class="c">'+d.city+' · '+d.dom+'</div>'+
+    '<div class="row2"><span>🏠 Seller wants</span><b>'+money(d.ask)+'</b></div>'+
+    '<div class="row2"><span>💰 Cash buyer pays</span><b>'+money(buyerMax)+'</b></div>'+
+    '<div class="row2 fee"><span>🤑 Your fee</span><b>?</b></div></div>'+
     '<div class="yn" id="yn"><button data-a="1">✅ Flip it</button><button data-a="0">❌ Pass</button></div><div class="result" id="res"></div>';
   foot('Next deal →',false);
   if(n===2) $('go').textContent='See my results →';
@@ -235,9 +237,10 @@ function game(n,d){
       S['r'+n]=right; track('quiz_answer',{q:'round'+n,a:ans?'flip':'pass',correct:right});
       [].forEach.call(document.querySelectorAll('#yn button'),function(x){x.disabled=true;x.style.opacity=x===b?1:.4});
       var r=$('res'); r.className='result '+(right?'ok':'no');
-      r.innerHTML='<b>'+(right?'Correct! ':'Not quite. ')+(isFlip?'This one\'s a flip.':'This one\'s a flop.')+'</b>'+
-        (isFlip?'A cash buyer would pay up to '+money(buyerMax)+'. Lock it at '+money(d.ask)+' and assign the contract for a fee of up to <strong>'+money(spread)+'</strong>.':'A cash buyer would only pay about '+money(buyerMax)+'. The seller wants '+money(d.ask)+', so there\'s no room for a fee unless they drop their price.')+
-        '<div class="math">70% × '+money(d.arv)+' − '+money(d.rep)+' = '+money(buyerMax)+'<br>'+money(buyerMax)+' − '+money(d.ask)+' = '+(spread>=0?money(spread):'−'+money(-spread))+'</div>';
+      r.innerHTML='<b>'+(right?'Correct! ':'Not quite. ')+(isFlip?'This one\'s a flip. 🎉':'This one\'s a flop.')+'</b>'+
+        (isFlip?'The buyer pays more than the seller wants. That gap is yours: <strong>'+money(spread)+'</strong> without ever buying the house.':'The seller wants more than the buyer will pay. No gap means no fee, so you pass and find the next one.')+
+        '<div class="math">'+money(buyerMax)+' − '+money(d.ask)+' = '+(spread>=0?money(spread):'−'+money(-spread))+'</div>'+
+        '<p class="hint" style="margin-top:8px">Tranchi\'s AI figures out what cash buyers will pay on every deal, so you don\'t have to.</p>';
       if(right) addPts(n===1?30:35, n===1?'+30 · Flipper instinct!':'+35 · You read the math!'); else addPts(5,'+5 · Lesson learned');
       $('go').disabled=false;
     };
