@@ -172,12 +172,12 @@ var screens = [
   },
   // 3 goal
   function(){
-    head('Step 3 of 6 · Your goal','What would your first flip mean to you?');
-    $('body').innerHTML='<p class="sub">An assignment fee is what you keep when you sell the contract to a cash buyer.</p>'+
+    head('Step 3 of 6 · Your goal','How much do you want to make on your first flip?');
+    $('body').innerHTML='<p class="sub">Your flip fee is the gap between what the seller takes and what the cash buyer pays. You keep it.</p>'+
       opts([
-        {v:'5k',b:'$5K: a first win',s:'Prove to myself this works.'},
-        {v:'10k',b:'$10K: real breathing room',s:'Pay off debt and get ahead.'},
-        {v:'20k',b:'$20K+: a new income',s:'Start replacing my paycheck.'}
+        {v:'5k',b:'💵 $5K',s:'A first win. Prove to myself this works.'},
+        {v:'10k',b:'💰 $10K',s:'Real breathing room. Pay off debt and get ahead.'},
+        {v:'15k',b:'🚀 $15K+',s:'Do what Caleb did on his first flip.'}
       ],'goal');
     bindOpts('goal',10,'+10 · Goal set');
     foot('Continue',!!S.goal);
