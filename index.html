@@ -146,12 +146,10 @@ var screens = [
   // 0 intro
   function(){
     head('🔓 '+(NAME?NAME+', you':'You')+' unlocked AI Contract Flipping', 'Play the game. Flip your first contract for <span style="color:var(--gold2)">$10K+</span>');
-    $('body').innerHTML='<div class="kicker" style="color:var(--gold);margin-bottom:10px">How it works</div>'+
-      '<div class="how"><i>1</i><div><b>AI finds a stuck seller</b>A house that sat too long, expired, or keeps dropping its price.<em>Why they sell low: they\'re tired of waiting, behind on payments, or inherited it. A fast cash offer with no repairs beats another 6 months on the market.</em></div></div>'+
-      '<div class="how"><i>2</i><div><b>You lock it under contract</b>At a price the seller says yes to. No money, no credit.</div></div>'+
-      '<div class="how"><i>3</i><div><b>Sell the contract to a cash buyer</b>They pay more, you keep the gap. You never buy the house.<em>Why they pay: investors fix it up and resell it for full value. They\'ll pay you a fee for a deal they didn\'t have to find.</em></div></div>'+
-      '<p class="sub" style="margin-top:14px">⭐ Caleb, 16, flipped his first contract for <b>$15K in 3 weeks</b>.</p>';
-    foot("Let's play →",true,'Spot 2 deals in 60 seconds',false);
+    $('body').innerHTML='<p class="sub">This is the same game we play on every deal: spot the stuck seller, run the numbers, flip the contract to a cash buyer. No money, no credit, no buying the house. You don\'t need the $4,000 program to start.</p>'+
+      '<p class="sub" style="margin-top:10px">⭐ Caleb, 16, flipped his first contract for <b>$15K in 3 weeks</b>.</p>'+
+      '<ul class="plan"><li>Pick your market and deal type</li><li>Spot 2 real-style deals: flip or flop?</li><li>Get your Flipper Score + matching deals</li></ul>';
+    foot("Let's play →",true,'Takes about 60 seconds',false);
   },
   // 1 state
   function(){
@@ -226,7 +224,11 @@ function game(n,d){
   var buyerMax=Math.round(d.arv*0.7-d.rep), spread=buyerMax-d.ask, isFlip=spread>=5000;
   head('Step '+(3+n)+' of 6 · Flip or flop? (round '+n+'/2)', n===1?'Is there money in this deal?':'What about this one?');
   $('body').innerHTML=
-    (n===1?'<p class="sub">You lock the house at the <b>seller\'s price</b>, then sell the contract to a <b>cash buyer</b>. If the buyer pays more, <b>you keep the difference</b>.</p>':'<p class="sub">Same game. Does the buyer pay <b>more</b> than the seller wants?</p>')+
+    (n===1?'<div class="kicker" style="color:var(--gold);margin-bottom:10px">How the game works</div>'+
+      '<div class="how"><i>1</i><div><b>AI finds a stuck seller</b>A house that sat too long, expired, or keeps dropping its price.<em>Why they sell low: they\'re tired of waiting, behind on payments, or inherited it. A fast cash offer with no repairs beats another 6 months on the market.</em></div></div>'+
+      '<div class="how"><i>2</i><div><b>You lock it under contract</b>At a price the seller says yes to. No money, no credit.</div></div>'+
+      '<div class="how"><i>3</i><div><b>Sell the contract to a cash buyer</b>They pay more, you keep the gap. You never buy the house.<em>Why they pay: investors fix it up and resell it for full value. They\'ll pay you a fee for a deal they didn\'t have to find.</em></div></div>'+
+      '<p class="sub" style="margin-top:4px"><b>Your move:</b> does the buyer pay more than the seller wants?</p>':'')+
     '<div class="deal"><div class="t">'+d.type+'</div><div class="c">'+d.city+' · '+d.dom+'</div>'+
     '<div class="row2"><span>🏠 Seller wants</span><b>'+money(d.ask)+'</b></div>'+
     '<div class="row2"><span>💰 Cash buyer pays</span><b>'+money(buyerMax)+'</b></div>'+
